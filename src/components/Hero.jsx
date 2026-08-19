@@ -55,6 +55,29 @@ export const Hero = () => {
           </div>
         </div>
 
+        {/* Profile Avatar */}
+        <div className="relative inline-block mb-6 group animate-fade-in">
+          <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 opacity-75 blur-md group-hover:opacity-100 transition duration-500 group-hover:scale-105"></div>
+          <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full p-1 bg-slate-900 border border-slate-700/80 shadow-2xl">
+            <img
+              src={portfolioData.personal.avatar}
+              alt={portfolioData.personal.name}
+              className="w-full h-full rounded-full object-cover"
+              onError={(e) => {
+                e.target.style.display = 'none';
+                e.target.nextSibling.style.display = 'flex';
+              }}
+            />
+            <div className="hidden w-full h-full rounded-full bg-gradient-to-tr from-indigo-600 to-cyan-500 items-center justify-center font-bold text-2xl sm:text-3xl text-white">
+              {portfolioData.personal.initials}
+            </div>
+          </div>
+          {/* Status badge on avatar */}
+          <span className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 w-5 h-5 rounded-full bg-emerald-500 border-2 border-slate-900 flex items-center justify-center" title="Available for opportunities">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          </span>
+        </div>
+
         {/* Main Heading */}
         <div className="space-y-4 mb-6">
           <h2 className="text-sm sm:text-base md:text-lg font-mono text-indigo-400 font-semibold tracking-wider uppercase">

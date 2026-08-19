@@ -16,6 +16,7 @@ export const portfolioData = {
     linkedin: "https://www.linkedin.com/in/sagnik-majumder-983297428/",
     resume: "https://drive.google.com/file/d/1VTy7k7x1fu1hmF7eERZ56zUKZqOXzTyk/view?usp=sharing",
     availability: "Available for Internships & Opportunities",
+    avatar: "/profile.png",
     tagline: "Crafting modern, accessible, and high-performance web experiences with React and Tailwind CSS."
   },
 
