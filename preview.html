@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sagnik Majumder | Frontend Developer & Student Developer</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%236366f1'/><text x='50%' y='55%' dominant-baseline='central' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='800' font-size='46'>SM</text></svg>" />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'fade-in': 'fadeIn 0.5s ease-out forwards',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(12px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React & Babel CDNs -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      background-color: #0a0f1d;
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .glass-card {
+      background: rgba(17, 24, 39, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glass-card-hover:hover {
+      background: rgba(21, 31, 50, 0.9);
+      border-color: rgba(99, 102, 241, 0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(99, 102, 241, 0.2);
+    }
+    .gradient-brand {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .bg-grid-pattern {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0f1d;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="selection:bg-indigo-500/30 selection:text-indigo-200 antialiased overflow-x-hidden">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const portfolioData = {
+      personal: {
+        name: "Sagnik Majumder",
+        initials: "SM",
+        roles: [
+          "Frontend Developer",
+          "Student Developer",
+          "React Enthusiast",
+          "UI/UX Explorer"
+        ],
+        primaryRole: "Frontend Developer & Student Developer",
+        college: "Swami Vivekanand Institute of Engineering and Technology",
+        location: "Patiala, Punjab, India",
+        email: "sagnik.majumder2505@gmail.com",
+        github: "https://github.com/Saaagniiik",
+        linkedin: "https://www.linkedin.com/in/sagnik-majumder-983297428/",
+        resume: "https://drive.google.com/file/d/1VTy7k7x1fu1hmF7eERZ56zUKZqOXzTyk/view?usp=sharing",
+        availability: "Available for Internships & Opportunities",
+        tagline: "Crafting modern, accessible, and high-performance web experiences with React and Tailwind CSS."
+      },
+
+      navLinks: [
+        { name: "Home", href: "#home" },
+        { name: "About", href: "#about" },
+        { name: "Skills", href: "#skills" },
+        { name: "Projects", href: "#projects" },
+        { name: "Education", href: "#education" },
+        { name: "Contact", href: "#contact" }
+      ],
+
+      about: {
+        bio: [
+          "I am Sagnik Majumder, a passionate Frontend Developer and undergraduate student at Swami Vivekanand Institute of Engineering and Technology, based in Patiala, Punjab, India.",
+          "My core focus is on building clean, responsive, and intuitive web interfaces. I love turning design concepts into interactive web applications using React.js, Tailwind CSS, and modern JavaScript.",
+          "I have a strong foundation in core programming languages like JavaScript, Python, Java, and C++, paired with a continuous curiosity to master state-of-the-art frontend tools and best practices."
+        ],
+        highlights: [
+          {
+            title: "Frontend Engineering",
+            description: "Specialized in component-driven development with React.js and modern utility-first CSS using Tailwind.",
+            icon: "layout"
+          },
+          {
+            title: "Clean & Responsive Architecture",
+            description: "Dedicated to writing clean, modular code with pixel-perfect responsive layouts on every device screen.",
+            icon: "code"
+          },
+          {
+            title: "Continuous Learning",
+            description: "Always expanding knowledge in modern web performance, algorithmic problem solving, and modern UI tooling.",
+            icon: "sparkles"
+          }
+        ],
+        currentFocus: "Advancing modern React design patterns, component state architecture, and interactive web application workflows.",
+        careerGoals: "Aiming to join a forward-thinking engineering team as a Frontend Developer / Software Engineer where I can build impactful products and contribute clean code."
+      },
+
+      skills: {
+        categories: [
+          { id: "all", label: "All Skills" },
+          { id: "languages", label: "Languages" },
+          { id: "frontend", label: "Frontend" },
+          { id: "tools", label: "Tools" }
+        ],
+        list: [
+          { name: "JavaScript", category: "languages", level: "Proficient", desc: "ES6+, DOM Manipulation, Async/Await, Modern APIs" },
+          { name: "Python", category: "languages", level: "Intermediate", desc: "Data Structures, Automation, Scripting & Problem Solving" },
+          { name: "Java", category: "languages", level: "Intermediate", desc: "Object-Oriented Programming (OOP), Core Concepts" },
+          { name: "C++", category: "languages", level: "Intermediate", desc: "Algorithms, STL, Memory Management, Problem Solving" },
+          
+          { name: "React.js", category: "frontend", level: "Proficient", desc: "Hooks, Functional Components, Virtual DOM, State" },
+          { name: "Tailwind CSS", category: "frontend", level: "Proficient", desc: "Responsive Utility Design, Custom Themes, Modern Layouts" },
+          { name: "HTML5", category: "frontend", level: "Advanced", desc: "Semantic Structure, Accessibility (a11y), SEO Best Practices" },
+          { name: "CSS3", category: "frontend", level: "Proficient", desc: "Flexbox, Grid, Custom Keyframe Animations, Glassmorphism" },
+
+          { name: "Git", category: "tools", level: "Proficient", desc: "Version Control, Branching Strategy, Merge & Collaboration" },
+          { name: "GitHub", category: "tools", level: "Proficient", desc: "Repository Management, Code Hosting, Open Source Workflows" },
+          { name: "VS Code", category: "tools", level: "Advanced", desc: "Primary Development Environment, Debugging, Extensions" },
+          { name: "Figma", category: "tools", level: "Intermediate", desc: "UI Design Inspection, Prototyping, Wireframing to Code" }
+        ]
+      },
+
+      projects: [
+        {
+          id: "project-1",
+          title: "Interactive Developer Portfolio",
+          tagline: "Modern, responsive personal portfolio showcasing projects & skills",
+          description: "A fast, high-performance portfolio website built with React and Tailwind CSS featuring smooth scroll navigation, glassmorphic UI components, dynamic skill filters, and a client-side contact workflow.",
+          techStack: ["React.js", "Tailwind CSS", "JavaScript", "Vite", "Lucide Icons"],
+          github: "https://github.com/Saaagniiik",
+          liveDemo: "#home",
+          category: "Frontend",
+          highlights: [
+            "100% responsive across mobile, tablet, and widescreen monitors",
+            "Clean component-driven architecture with modular data stores",
+            "Client-side interaction validation with direct email copy helper"
+          ]
+        },
+        {
+          id: "project-2",
+          title: "TaskFlow — Productivity & Task Board",
+          tagline: "Component-based task manager with local persistence",
+          description: "A clean productivity web application designed with React and Tailwind CSS for managing daily developer workflows, featuring category sorting, status transitions, and persistent local storage state.",
+          techStack: ["React.js", "Tailwind CSS", "JavaScript", "LocalStorage"],
+          github: "https://github.com/Saaagniiik",
+          liveDemo: "https://github.com/Saaagniiik",
+          category: "Frontend",
+          highlights: [
+            "Interactive drag-and-drop / status column movement",
+            "Persistent client-side state without external database requirements",
+            "Dark mode glassmorphic UI cards with smooth hover transitions"
+          ]
+        },
+        {
+          id: "project-3",
+          title: "Algorithmic Problem Solutions Repository",
+          tagline: "Curated collection of data structures & algorithms implementations",
+          description: "A structured repository containing optimized algorithmic problem solutions written in C++, Java, and Python, focusing on time and space complexity efficiency.",
+          techStack: ["C++", "Java", "Python", "Data Structures", "Algorithms"],
+          github: "https://github.com/Saaagniiik",
+          liveDemo: "https://github.com/Saaagniiik",
+          category: "Algorithms",
+          highlights: [
+            "Implementation of core Data Structures (Arrays, Trees, Graphs)",
+            "Optimized asymptotic time and space complexity solutions",
+            "Documented code explanations for interview problem patterns"
+          ]
+        }
+      ],
+
+      education: [
+        {
+          degree: "Bachelor of Technology (B.Tech)",
+          institution: "Swami Vivekanand Institute of Engineering and Technology",
+          location: "Patiala, Punjab, India",
+          period: "Present",
+          description: "Pursuing engineering degree with a focus on Computer Science fundamentals, Software Engineering, Object-Oriented Programming, and Web Development technologies.",
+          highlights: [
+            "Focus on Web Technologies, Data Structures & Algorithms",
+            "Active student developer participating in coding practice and frontend projects",
+            "Hands-on project work in React, JavaScript, and modern UI engineering"
+          ]
+        }
+      ]
+    };
+
+    // Icons
+    const IconGithub = ({ className = "w-5 h-5" }) => (
+      <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+        <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+      </svg>
+    );
+
+    const IconLinkedin = ({ className = "w-5 h-5" }) => (
+      <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 1 0 0-3.28 1.64 1.64 0 0 0 0 3.28M7.85 18.5V10.1H5.06v8.4h2.79z" />
+      </svg>
+    );
+
+    const IconMail = ({ className = "w-5 h-5" }) => (
+      <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+      </svg>
+    );
+
+    const IconMapPin = ({ className = "w-4 h-4" }) => (
+      <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" />
+      </svg>
+    );
+
+    const IconExternalLink = ({ className = "w-4 h-4" }) => (
+      <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      </svg>
+    );
+
+    const IconArrowUpRight = ({ className = "w-4 h-4" }) => (
+      <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <path d="M7 7h10v10" /><path d="M7 17 17 7" />
+      </svg>
+    );
+
+    const IconCheck = ({ className = "w-4 h-4" }) => (
+      <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+    );
+
+    const IconCopy = ({ className = "w-4 h-4" }) => (
+      <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <rect width="14" height="14" x="8" y="8" rx="2" ry="2" /><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+      </svg>
+    );
+
+    const IconMenu = ({ className = "w-6 h-6" }) => (
+      <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" />
+      </svg>
+    );
+
+    const IconX = ({ className = "w-6 h-6" }) => (
+      <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+      </svg>
+    );
+
+    const IconSend = ({ className = "w-4 h-4" }) => (
+      <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" />
+      </svg>
+    );
+
+    const IconChevronUp = ({ className = "w-5 h-5" }) => (
+      <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <path d="m18 15-6-6-6 6" />
+      </svg>
+    );
+
+    const IconCheckCircle = ({ className = "w-5 h-5" }) => (
+      <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><path d="m9 11 3 3L22 4" />
+      </svg>
+    );
+
+    // Navbar Component
+    const Navbar = () => {
+      const [isScrolled, setIsScrolled] = useState(false);
+      const [mobileOpen, setMobileOpen] = useState(false);
+      const [active, setActive] = useState('home');
+
+      useEffect(() => {
+        const handleScroll = () => {
+          setIsScrolled(window.scrollY > 20);
+          const sections = ['home', 'about', 'skills', 'projects', 'education', 'contact'];
+          const pos = window.scrollY + 120;
+          for (const s of sections) {
+            const el = document.getElementById(s);
+            if (el && pos >= el.offsetTop && pos < el.offsetTop + el.offsetHeight) {
+              setActive(s);
+              break;
+            }
+          }
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+
+      const scrollTo = (e, href) => {
+        e.preventDefault();
+        setMobileOpen(false);
+        const target = document.getElementById(href.replace('#', ''));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      };
+
+      return (
+        <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? 'bg-[#0a0f1d]/90 backdrop-blur-md border-b border-slate-800 shadow-lg py-3' : 'bg-transparent py-5'}`}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+            <a href="#home" onClick={(e) => scrollTo(e, '#home')} className="flex items-center gap-2.5">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-400 flex items-center justify-center font-bold text-white shadow-md shadow-indigo-500/20">
+                {portfolioData.personal.initials}
+              </div>
+              <div>
+                <span className="text-base sm:text-lg font-bold text-white block">{portfolioData.personal.name}</span>
+                <span className="text-xs font-mono text-indigo-400">&lt;Developer /&gt;</span>
+              </div>
+            </a>
+
+            <nav className="hidden md:flex items-center gap-1 bg-slate-900/60 p-1.5 rounded-full border border-slate-800 backdrop-blur-md">
+              {portfolioData.navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => scrollTo(e, link.href)}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${active === link.href.replace('#', '') ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30' : 'text-slate-300 hover:text-white hover:bg-slate-800/60'}`}
+                >
+                  {link.name}
+                </a>
+              ))}
+            </nav>
+
+            <div className="hidden md:flex items-center gap-3">
+              <a
+                href={portfolioData.personal.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-slate-300 hover:text-white bg-slate-800/80 border border-slate-700/80 rounded-xl transition-all"
+              >
+                <span>Resume</span>
+                <IconExternalLink className="w-3.5 h-3.5" />
+              </a>
+              <a
+                href="#contact"
+                onClick={(e) => scrollTo(e, '#contact')}
+                className="inline-flex items-center px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 rounded-xl shadow-md shadow-indigo-600/30"
+              >
+                Get in Touch
+              </a>
+            </div>
+
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="md:hidden p-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-300"
+            >
+              {mobileOpen ? <IconX className="w-6 h-6" /> : <IconMenu className="w-6 h-6" />}
+            </button>
+          </div>
+
+          {mobileOpen && (
+            <div className="md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-3 pb-6 space-y-2 mt-2">
+              {portfolioData.navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => scrollTo(e, link.href)}
+                  className="block px-4 py-2 rounded-xl text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-white"
+                >
+                  {link.name}
+                </a>
+              ))}
+              <div className="pt-3 border-t border-slate-800 flex flex-col gap-2">
+                <a
+                  href={portfolioData.personal.resume}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 py-2 px-4 rounded-xl text-sm font-medium bg-slate-800 text-slate-200"
+                >
+                  <span>View Resume</span>
+                  <IconExternalLink className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+          )}
+        </header>
+      );
+    };
+
+    // Hero Component
+    const Hero = () => {
+      const [roleIdx, setRoleIdx] = useState(0);
+      const roles = portfolioData.personal.roles;
+
+      useEffect(() => {
+        const interval = setInterval(() => {
+          setRoleIdx((prev) => (prev + 1) % roles.length);
+        }, 2600);
+        return () => clearInterval(interval);
+      }, [roles.length]);
+
+      return (
+        <section id="home" className="relative min-h-screen flex items-center justify-center pt-28 pb-16 overflow-hidden">
+          <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-slow" />
+          
+          <div className="relative max-w-5xl mx-auto px-4 text-center z-10">
+            <div className="inline-flex flex-wrap items-center justify-center gap-2.5 mb-8">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 text-xs sm:text-sm font-medium backdrop-blur-md">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span>{portfolioData.personal.availability}</span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/60 border border-slate-800 text-slate-400 text-xs sm:text-sm">
+                <IconMapPin className="w-3.5 h-3.5 text-indigo-400" />
+                <span>{portfolioData.personal.location}</span>
+              </div>
+            </div>
+
+            <h2 className="text-xs sm:text-sm font-mono text-indigo-400 font-semibold tracking-wider uppercase mb-2">
+              Welcome to my portfolio
+            </h2>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white mb-4">
+              Hi, I'm <span className="gradient-brand">{portfolioData.personal.name}</span>
+            </h1>
+
+            <div className="h-10 sm:h-12 flex items-center justify-center mb-6">
+              <div className="text-xl sm:text-3xl font-semibold text-slate-200 flex items-center gap-2">
+                <span className="text-slate-400">I am a</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-purple-400">
+                  {roles[roleIdx]}
+                </span>
+              </div>
+            </div>
+
+            <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-300 leading-relaxed mb-10">
+              Undergraduate student at <span className="text-indigo-300 font-medium">{portfolioData.personal.college}</span> passionate about crafting responsive, user-centric web interfaces with <span className="text-cyan-300 font-medium">React</span> and <span className="text-teal-300 font-medium">Tailwind CSS</span>.
+            </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-3.5 mb-12">
+              <a
+                href="#projects"
+                className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 rounded-xl shadow-lg shadow-indigo-600/30 transition-all hover:-translate-y-0.5"
+              >
+                <span>View Projects</span>
+                <IconArrowUpRight className="w-4 h-4" />
+              </a>
+
+              <a
+                href={portfolioData.personal.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold text-slate-200 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 rounded-xl transition-all hover:-translate-y-0.5"
+              >
+                <span>View Resume</span>
+                <IconExternalLink className="w-4 h-4 text-indigo-400" />
+              </a>
+
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold text-indigo-300 bg-indigo-950/40 hover:bg-indigo-900/50 border border-indigo-500/30 rounded-xl transition-all"
+              >
+                <span>Contact Me</span>
+                <IconMail className="w-4 h-4" />
+              </a>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-6 border-t border-slate-800/60 text-slate-400">
+              <div className="flex items-center gap-3">
+                <span className="text-xs uppercase font-mono text-slate-500">Connect:</span>
+                <a href={portfolioData.personal.github} target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-indigo-500/40">
+                  <IconGithub className="w-5 h-5" />
+                </a>
+                <a href={portfolioData.personal.linkedin} target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-[#0a66c2] hover:border-indigo-500/40">
+                  <IconLinkedin className="w-5 h-5" />
+                </a>
+                <a href={`mailto:${portfolioData.personal.email}`} className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-indigo-400 hover:border-indigo-500/40">
+                  <IconMail className="w-5 h-5" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    // About Component
+    const About = () => {
+      return (
+        <section id="about" className="py-24 relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="inline-block px-3 py-1 rounded-full bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 text-xs font-mono uppercase mb-3">Overview</span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white">About <span className="gradient-brand">Me</span></h2>
+              <p className="mt-3 text-slate-400">A snapshot of my background, technical mindset, and developer journey.</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <div className="lg:col-span-7 space-y-6">
+                <div className="glass-card p-6 sm:p-8 rounded-2xl space-y-4">
+                  <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+                    Who I Am
+                  </h3>
+                  <div className="space-y-3.5 text-slate-300 text-base leading-relaxed">
+                    {portfolioData.about.bio.map((p, i) => <p key={i}>{p}</p>)}
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-slate-800">
+                    <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                      <span className="text-xs text-slate-400 block font-mono">College</span>
+                      <span className="text-sm font-semibold text-slate-200">{portfolioData.personal.college}</span>
+                    </div>
+                    <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                      <span className="text-xs text-slate-400 block font-mono">Location</span>
+                      <span className="text-sm font-semibold text-slate-200">{portfolioData.personal.location}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="glass-card p-5 rounded-xl border-l-4 border-l-indigo-500 space-y-1.5">
+                    <h4 className="text-xs font-mono uppercase text-indigo-400 font-semibold">What I'm Learning</h4>
+                    <p className="text-sm text-slate-300">{portfolioData.about.currentFocus}</p>
+                  </div>
+                  <div className="glass-card p-5 rounded-xl border-l-4 border-l-cyan-500 space-y-1.5">
+                    <h4 className="text-xs font-mono uppercase text-cyan-400 font-semibold">Career Goals</h4>
+                    <p className="text-sm text-slate-300">{portfolioData.about.careerGoals}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="lg:col-span-5 space-y-4">
+                <span className="text-xs font-mono uppercase text-slate-400 block px-1">Core Principles & Strengths</span>
+                {portfolioData.about.highlights.map((h, i) => (
+                  <div key={i} className="glass-card glass-card-hover p-6 rounded-2xl space-y-2">
+                    <h4 className="text-lg font-bold text-white">{h.title}</h4>
+                    <p className="text-sm text-slate-400">{h.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    // Skills Component
+    const Skills = () => {
+      const [cat, setCat] = useState('all');
+      const filtered = cat === 'all' ? portfolioData.skills.list : portfolioData.skills.list.filter(s => s.category === cat);
+
+      return (
+        <section id="skills" className="py-24 bg-slate-950/40 border-y border-slate-900">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <span className="inline-block px-3 py-1 rounded-full bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 text-xs font-mono uppercase mb-3">Technical Toolkit</span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Skills & <span className="gradient-brand">Expertise</span></h2>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
+              {portfolioData.skills.categories.map((c) => (
+                <button
+                  key={c.id}
+                  onClick={() => setCat(c.id)}
+                  className={`px-5 py-2 rounded-xl text-sm font-medium transition-all ${cat === c.id ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30' : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'}`}
+                >
+                  {c.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {filtered.map((skill) => (
+                <div key={skill.name} className="glass-card glass-card-hover p-5 rounded-2xl flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="text-base font-bold text-white">{skill.name}</h3>
+                      <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">{skill.level}</span>
+                    </div>
+                    <p className="text-xs text-slate-400 mb-4">{skill.desc}</p>
+                  </div>
+                  <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
+                    <span className="text-[11px] font-mono text-slate-500 uppercase">#{skill.category}</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    // Projects Component
+    const Projects = () => {
+      return (
+        <section id="projects" className="py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="inline-block px-3 py-1 rounded-full bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 text-xs font-mono uppercase mb-3">Featured Work</span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Selected <span className="gradient-brand">Projects</span></h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+              {portfolioData.projects.map((proj) => (
+                <div key={proj.id} className="glass-card glass-card-hover rounded-2xl flex flex-col justify-between overflow-hidden">
+                  <div className="bg-slate-900/90 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+                    </div>
+                    <span className="text-[11px] font-mono text-slate-400">{proj.category}</span>
+                  </div>
+
+                  <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                      <h3 className="text-xl font-bold text-white">{proj.title}</h3>
+                      <p className="text-xs text-indigo-400 font-medium mt-0.5">{proj.tagline}</p>
+                      <p className="text-sm text-slate-300 mt-3">{proj.description}</p>
+                      <ul className="mt-4 space-y-1">
+                        {proj.highlights.map((h, i) => (
+                          <li key={i} className="text-xs text-slate-400 flex items-start gap-2">
+                            <IconCheck className="w-3.5 h-3.5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                            <span>{h}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="pt-3 border-t border-slate-800 flex flex-wrap gap-1.5">
+                      {proj.techStack.map((t) => (
+                        <span key={t} className="px-2 py-0.5 rounded text-xs font-mono bg-slate-800 text-slate-300 border border-slate-700">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="p-5 bg-slate-900/60 border-t border-slate-800 flex items-center gap-3">
+                    <a
+                      href={proj.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700"
+                    >
+                      <IconGithub className="w-4 h-4" />
+                      <span>Repository</span>
+                    </a>
+                    {proj.liveDemo && (
+                      <a
+                        href={proj.liveDemo}
+                        target={proj.liveDemo.startsWith('#') ? '_self' : '_blank'}
+                        rel="noopener noreferrer"
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500"
+                      >
+                        <span>Live Demo</span>
+                        <IconArrowUpRight className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    // Education Component
+    const Education = () => {
+      return (
+        <section id="education" className="py-24 bg-slate-950/40 border-t border-slate-900">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="inline-block px-3 py-1 rounded-full bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 text-xs font-mono uppercase mb-3">Academic Background</span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Education & <span className="gradient-brand">Qualifications</span></h2>
+            </div>
+
+            <div className="max-w-4xl mx-auto">
+              {portfolioData.education.map((edu, idx) => (
+                <div key={idx} className="glass-card glass-card-hover p-6 sm:p-8 rounded-2xl relative overflow-hidden">
+                  <div className="absolute top-0 left-0 bottom-0 w-1.5 bg-gradient-to-b from-indigo-500 to-cyan-400" />
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
+                    <div>
+                      <h3 className="text-2xl font-bold text-white">{edu.degree}</h3>
+                      <p className="text-lg text-indigo-400 font-semibold">{edu.institution}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-500/30 text-indigo-300 text-xs font-mono">{edu.period}</span>
+                      <span className="px-3 py-1 rounded-full bg-slate-900 border border-slate-700 text-slate-300 text-xs">{edu.location}</span>
+                    </div>
+                  </div>
+                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-5">{edu.description}</p>
+                  <div className="space-y-2 pt-4 border-t border-slate-800">
+                    <span className="text-xs font-mono uppercase text-slate-400 font-semibold block">Key Focus Areas</span>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                      {edu.highlights.map((h, i) => (
+                        <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-slate-400">
+                          <IconCheckCircle className="w-4 h-4 text-cyan-400 mt-0.5 flex-shrink-0" />
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    // Contact Component
+    const Contact = ({ onToast }) => {
+      const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
+      const [submitted, setSubmitted] = useState(false);
+      const [copied, setCopied] = useState(false);
+
+      const copyEmail = () => {
+        navigator.clipboard.writeText(portfolioData.personal.email);
+        setCopied(true);
+        if (onToast) onToast('Email copied to clipboard!');
+        setTimeout(() => setCopied(false), 2500);
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        setSubmitted(true);
+        if (onToast) onToast('Message prepared! Thank you for reaching out.');
+      };
+
+      return (
+        <section id="contact" className="py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="inline-block px-3 py-1 rounded-full bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 text-xs font-mono uppercase mb-3">Get in Touch</span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Contact <span className="gradient-brand">Me</span></h2>
+              <p className="mt-3 text-slate-400">Have an internship opportunity, project, or question? Let's connect!</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <div className="lg:col-span-5 space-y-4">
+                <div className="glass-card p-6 rounded-2xl space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="w-10 h-10 rounded-xl bg-indigo-950 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+                      <IconMail className="w-5 h-5" />
+                    </div>
+                    <button
+                      onClick={copyEmail}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium"
+                    >
+                      {copied ? <span className="text-emerald-400">Copied!</span> : <span>Copy Email</span>}
+                    </button>
+                  </div>
+                  <div>
+                    <span className="text-xs text-slate-400 font-mono uppercase">Email Address</span>
+                    <a href={`mailto:${portfolioData.personal.email}`} className="block text-base font-bold text-white hover:text-indigo-300 break-all">
+                      {portfolioData.personal.email}
+                    </a>
+                  </div>
+                </div>
+
+                <div className="glass-card p-5 rounded-2xl flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-cyan-950 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                    <IconMapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-xs text-slate-400 font-mono uppercase">Location</span>
+                    <p className="text-sm font-semibold text-white">{portfolioData.personal.location}</p>
+                  </div>
+                </div>
+
+                <div className="glass-card p-6 rounded-2xl space-y-3">
+                  <span className="text-xs text-slate-400 font-mono uppercase block">Profiles</span>
+                  <div className="grid grid-cols-2 gap-3">
+                    <a href={portfolioData.personal.github} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 hover:text-white">
+                      <span className="text-sm font-medium">GitHub</span>
+                      <IconExternalLink className="w-3.5 h-3.5 text-slate-500" />
+                    </a>
+                    <a href={portfolioData.personal.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 hover:text-white">
+                      <span className="text-sm font-medium">LinkedIn</span>
+                      <IconExternalLink className="w-3.5 h-3.5 text-slate-500" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="lg:col-span-7">
+                <div className="glass-card p-6 sm:p-8 rounded-2xl">
+                  {submitted ? (
+                    <div className="py-10 text-center space-y-4">
+                      <div className="w-14 h-14 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 mx-auto">
+                        <IconCheckCircle className="w-8 h-8" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white">Message Prepared!</h3>
+                      <p className="text-slate-300 text-sm max-w-sm mx-auto">Thank you, {form.name}. You can also open this directly in your email app.</p>
+                      <div className="flex justify-center gap-3 pt-2">
+                        <a
+                          href={`mailto:${portfolioData.personal.email}?subject=${encodeURIComponent(form.subject || 'Portfolio Inquiry')}&body=${encodeURIComponent(`Hi Sagnik,\n\n${form.message}\n\nFrom: ${form.name} (${form.email})`)}`}
+                          className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold"
+                        >
+                          Open in Email App
+                        </a>
+                        <button onClick={() => setSubmitted(false)} className="px-5 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-sm">
+                          Send Another
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-xs font-mono text-slate-300 mb-1">Your Name *</label>
+                          <input
+                            type="text"
+                            required
+                            value={form.name}
+                            onChange={(e) => setForm({ ...form, name: e.target.value })}
+                            placeholder="Alex Smith"
+                            className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-mono text-slate-300 mb-1">Your Email *</label>
+                          <input
+                            type="email"
+                            required
+                            value={form.email}
+                            onChange={(e) => setForm({ ...form, email: e.target.value })}
+                            placeholder="alex@example.com"
+                            className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-mono text-slate-300 mb-1">Subject</label>
+                        <input
+                          type="text"
+                          value={form.subject}
+                          onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                          placeholder="Frontend Internship Opportunity"
+                          className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-mono text-slate-300 mb-1">Message *</label>
+                        <textarea
+                          required
+                          rows={4}
+                          value={form.message}
+                          onChange={(e) => setForm({ ...form, message: e.target.value })}
+                          placeholder="Type your message here..."
+                          className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        className="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-semibold text-sm shadow-md hover:from-indigo-500 hover:to-indigo-400 flex items-center justify-center gap-2"
+                      >
+                        <span>Send Message</span>
+                        <IconSend className="w-4 h-4" />
+                      </button>
+                    </form>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    // Footer Component
+    const Footer = () => {
+      const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      return (
+        <footer className="bg-slate-950 border-t border-slate-900 py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-900">
+              <div className="text-center md:text-left">
+                <span className="text-lg font-bold text-white block">{portfolioData.personal.name}</span>
+                <p className="text-xs text-slate-400 font-mono">{portfolioData.personal.primaryRole} • Patiala, Punjab, India</p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <a href={portfolioData.personal.github} target="_blank" rel="noopener noreferrer" className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white">
+                  <IconGithub className="w-4 h-4" />
+                </a>
+                <a href={portfolioData.personal.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-[#0a66c2]">
+                  <IconLinkedin className="w-4 h-4" />
+                </a>
+                <a href={`mailto:${portfolioData.personal.email}`} className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-indigo-400">
+                  <IconMail className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-xs text-slate-500">
+              <p>© {new Date().getFullYear()} {portfolioData.personal.name}. All rights reserved.</p>
+              <div className="flex items-center gap-4">
+                <span className="font-mono text-[11px] text-slate-400">Built with <span className="text-cyan-400">React</span> & <span className="text-teal-400">Tailwind CSS</span></span>
+                <button onClick={scrollToTop} className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white">
+                  <IconChevronUp className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </footer>
+      );
+    };
+
+    // Main App
+    function App() {
+      const [toast, setToast] = useState('');
+
+      return (
+        <div className="min-h-screen bg-[#0a0f1d] text-slate-100 font-sans">
+          {toast && (
+            <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 bg-slate-900/95 border border-indigo-500/40 text-white rounded-xl shadow-2xl backdrop-blur-md">
+              <IconCheckCircle className="w-5 h-5 text-emerald-400" />
+              <p className="text-sm">{toast}</p>
+              <button onClick={() => setToast('')} className="ml-2 text-slate-400 hover:text-white">
+                <IconX className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+
+          <Navbar />
+          <main>
+            <Hero />
+            <About />
+            <Skills />
+            <Projects />
+            <Education />
+            <Contact onToast={(msg) => setToast(msg)} />
+          </main>
+          <Footer />
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
